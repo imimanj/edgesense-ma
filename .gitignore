@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Conda
+.conda/
+
+# macOS
+.DS_Store
+
+# Local environment files
+.env
+.env.*
+
+# Runtime data
+data/logs/*
+data/reports/*
+data/samples/*
+
+# Keep folder structure
+!data/logs/.gitkeep
+!data/reports/.gitkeep
+!data/samples/.gitkeep
+
+# Model files
+models/pytorch/*
+models/onnx/*
+models/quantized/*
+
+!models/pytorch/.gitkeep
+!models/onnx/.gitkeep
+!models/quantized/.gitkeep
+
+# Streamlit local config
+.streamlit/secrets.toml
+
+!.env.example
+data/runtime/
+data/events/
+
+# Local calibration and hardware-test outputs
+data/calibration/*.csv
+data/calibration/*.json
+data/hardware_tests/

@@ -7,7 +7,12 @@ from threading import Lock
 
 from fastapi import FastAPI
 
-from services.sensor_service.app.hardware.mq135 import MQ135Reader
+try:
+    from services.sensor_service.app.hardware.mq135 import MQ135Reader
+except ModuleNotFoundError as exc:
+    if exc.name != "spidev":
+        raise
+    MQ135Reader = None
 from services.sensor_service.app.mq135_classifier import (
     MQ135SignalClassifier,
 )
@@ -114,6 +119,11 @@ def read_real_mq135() -> tuple[int, str]:
 
     The result is not a regulatory AQI or calibrated gas concentration.
     """
+    if MQ135Reader is None:
+        raise RuntimeError(
+            "MQ-135 real mode requires the spidev package and Linux SPI support"
+        )
+
     with mq135_read_lock:
         reader = MQ135Reader(channel=0)
 

@@ -1,0 +1,14 @@
+[Unit]
+Description=EdgeSense-MA Complete Edge AI Stack
+Wants=edgesense-camera.service
+Wants=edgesense-sensor.service
+Wants=edgesense-audio.service
+Wants=edgesense-vision.service
+Wants=edgesense-agent.service
+Wants=edgesense-api.service
+Wants=edgesense-motion-worker.service
+Wants=edgesense-dashboard.service
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target

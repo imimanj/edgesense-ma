@@ -1,0 +1,24 @@
+[Unit]
+Description=EdgeSense-MA Camera Service
+PartOf=edgesense-ma.target
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USER
+Group=YOUR_USER
+SupplementaryGroups=video render gpio i2c spi
+WorkingDirectory=/home/YOUR_USER/edgesense-ma
+Environment=HOME=/home/YOUR_USER
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/home/YOUR_USER/edgesense-ma/deploy/systemd/edgesense-ma.env
+ExecStart=/home/YOUR_USER/edgesense-pi-venv/bin/python -m uvicorn services.camera_service.app.main:app --host 0.0.0.0 --port 8001
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=edgesense-ma.target

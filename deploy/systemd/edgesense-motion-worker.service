@@ -1,0 +1,24 @@
+[Unit]
+Description=EdgeSense-MA PIR Motion Vision Worker
+PartOf=edgesense-ma.target
+Wants=edgesense-sensor.service edgesense-audio.service edgesense-vision.service edgesense-agent.service
+After=edgesense-sensor.service edgesense-audio.service edgesense-vision.service edgesense-agent.service
+
+[Service]
+Type=simple
+User=YOUR_USER
+Group=YOUR_USER
+SupplementaryGroups=video render gpio i2c spi
+WorkingDirectory=/home/YOUR_USER/edgesense-ma
+Environment=HOME=/home/YOUR_USER
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/home/YOUR_USER/edgesense-ma/deploy/systemd/edgesense-ma.env
+ExecStart=/usr/bin/python3 /home/YOUR_USER/edgesense-ma/scripts/motion_vision_worker.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=edgesense-ma.target

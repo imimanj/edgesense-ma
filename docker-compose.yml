@@ -1,0 +1,63 @@
+services:
+  api_gateway:
+    build:
+      context: .
+      dockerfile: services/api_gateway/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - camera_service
+      - sensor_service
+      - audio_service
+      - vision_inference_service
+      - agent_service
+
+  camera_service:
+    build:
+      context: .
+      dockerfile: services/camera_service/Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./data:/app/data
+
+  sensor_service:
+    build:
+      context: .
+      dockerfile: services/sensor_service/Dockerfile
+    ports:
+      - "8002:8002"
+    # Enable these on Raspberry Pi after hardware wiring:
+    # devices:
+    #   - "/dev/i2c-1:/dev/i2c-1"
+    #   - "/dev/spidev0.0:/dev/spidev0.0"
+
+  audio_service:
+    build:
+      context: .
+      dockerfile: services/audio_service/Dockerfile
+    ports:
+      - "8003:8003"
+
+  vision_inference_service:
+    build:
+      context: .
+      dockerfile: services/vision_inference_service/Dockerfile
+    ports:
+      - "8004:8004"
+
+  agent_service:
+    build:
+      context: .
+      dockerfile: services/agent_service/Dockerfile
+    ports:
+      - "8005:8005"
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api_gateway

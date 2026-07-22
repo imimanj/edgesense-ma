@@ -13,7 +13,7 @@ WorkingDirectory=/home/YOUR_USER/edgesense-ma
 Environment=HOME=/home/YOUR_USER
 Environment=PYTHONUNBUFFERED=1
 EnvironmentFile=/home/YOUR_USER/edgesense-ma/deploy/systemd/edgesense-ma.env
-ExecStart=/usr/bin/python3 /home/YOUR_USER/edgesense-ma/scripts/motion_vision_worker.py
+ExecStart=/usr/bin/env PYTHONPATH=/home/YOUR_USER/edgesense-ma /usr/bin/python3 /home/YOUR_USER/edgesense-ma/scripts/motion_vision_worker.py
 Restart=on-failure
 RestartSec=5
 TimeoutStopSec=30
